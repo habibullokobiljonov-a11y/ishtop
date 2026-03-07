@@ -178,3 +178,30 @@ document.addEventListener("DOMContentLoaded", () => {
      });
    }
 });
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+let jobs = [
+ { id:1, title:"Frontend Developer", company:"IT Solutions", location:"Toshkent", type:"Full-time"},
+ { id:2, title:"Backend Developer", company:"Tech Group", location:"Samarqand", type:"Remote"}
+];
+
+app.get("/jobs",(req,res)=>{
+ res.json(jobs);
+});
+
+app.post("/jobs",(req,res)=>{
+ const job = { id:Date.now(), ...req.body };
+ jobs.push(job);
+ res.json(job);
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT,()=>{
+ console.log("Server running on port "+PORT);
+});
