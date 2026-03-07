@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IshTop.uz - O'zbekistondan ish topish</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">Ish<span>Top</span></div>
+    <nav>
+      <a href="#jobs">Vakansiyalar</a>
+      <a href="#add-job">Vakansiya qo'shish</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>O'zbekistondan ish toping</h1>
+    <p>Eng yaxshi vakansiyalar shu yerda</p>
+  </div>
+</section>
+
+<section class="jobs" id="jobs">
+  <h2>Vakansiyalar</h2>
+  <div class="jobs-search">
+    <input
+      type="text"
+      id="jobsSearchInput"
+      placeholder="Kasb yoki kompaniya bo'yicha qidirish"
+    >
+  </div>
+  <div id="jobsContainer" class="jobs-grid"></div>
+  <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
+  <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend (5000-port) ishlayotganini tekshiring.</div>
+  <div id="jobsEmpty" class="info-text" style="display: none;">Hozircha vakansiya yo'q. Birinchi vakansiyani qo'shing.</div>
+</section>
+
+<section class="add-job-section" id="add-job">
+  <h2>Vakansiya qo'shish</h2>
+  <form id="addJobForm" class="add-job-form">
+    <label>
+      <span>Lavozim *</span>
+      <input type="text" name="title" required placeholder="Masalan: Frontend Developer">
+    </label>
+    <label>
+      <span>Kompaniya *</span>
+      <input type="text" name="company" required placeholder="Kompaniya nomi">
+    </label>
+    <label>
+      <span>Joylashuv *</span>
+      <input type="text" name="location" required placeholder="Masalan: Toshkent">
+    </label>
+    <label>
+      <span>Ish turi</span>
+      <input type="text" name="type" placeholder="Full-time">
+    </label>
+    <button type="submit">Vakansiyani qo'shish</button>
+  </form>
+  <p id="formMessage" class="form-message"></p>
+</section>
+
+<footer>
+  <p>© 2026 IshTop.uz - Barcha huquqlar himoyalangan</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
