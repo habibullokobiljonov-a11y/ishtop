@@ -19,7 +19,11 @@ app.get("/jobs", (req, res) => {
 app.post("/jobs", (req, res) => {
   const { title, company, location, type } = req.body;
   if (!title || !company || !location) {
+<<<<<<< HEAD
     return res.status(400).json({ success: false, message: "Required fields" });
+=======
+    return res.status(400).json({ success: false, message: "Title, company, and location are required" });
+>>>>>>> c3f9340b78d8b750fe9edaf4617c06c9280f0d6e
   }
   const newJob = { id: Date.now(), title, company, location, type: type || "Full-time" };
   jobs.push(newJob);
@@ -29,7 +33,11 @@ app.post("/jobs", (req, res) => {
 app.delete("/jobs/:id", (req, res) => {
   const jobId = Number(req.params.id);
   jobs = jobs.filter(job => job.id !== jobId);
+<<<<<<< HEAD
   res.json({ success: true });
+=======
+  res.json({ success: true, message: "Job deleted successfully" });
+>>>>>>> c3f9340b78d8b750fe9edaf4617c06c9280f0d6e
 });
 
 const PORT = process.env.PORT || 5000;
