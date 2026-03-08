@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000";
+const API_BASE = "";
 
 const jobsContainer = document.getElementById("jobsContainer");
 const jobsLoading = document.getElementById("jobsLoading");
