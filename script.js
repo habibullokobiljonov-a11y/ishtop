@@ -63,7 +63,8 @@ function renderJobs(jobs) {
             <h3 class="job-card-title">${escapeHtml(job.title)}</h3>
             <p class="job-card-company">Kompaniya: ${escapeHtml(job.company)}</p>
             <p class="job-card-location">Joylashuv: ${escapeHtml(job.location)}</p>
-            <p class="job-card-type">Ish turi: ${escapeHtml(job.type || "Full-time")}</p>
+            <p class="job-card-type"><span class="job-type">${escapeHtml(job.type || "Full-time")}</span></p>
+            <p class="job-card-salary"><span class="salary">${escapeHtml(job.salary || "Kelishiladi")}</span></p>
             <button class="job-card-delete" data-id="${job.id}">Delete</button>
         `;
         jobsContainer.appendChild(card);
@@ -102,13 +103,14 @@ addJobForm.addEventListener("submit", async (e) => {
     const title = (fd.get("title") || "").trim();
     const company = (fd.get("company") || "").trim();
     const location = (fd.get("location") || "").trim();
+    const salary = (fd.get("salary") || "").trim();
     const type = (fd.get("type") || "Full-time").trim();
     if (!title || !company || !location) {
         formMessage.textContent = "Lavozim, kompaniya va joylashuv majburiy.";
         formMessage.className = "form-message error";
         return;
     }
-    const body = { title, company, location, type: type || "Full-time" };
+    const body = { title, company, location, type, salary: type || "Full-time" };
     try {
         const res = await fetch(`${API_BASE}/jobs`, {
             method: "POST",

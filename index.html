@@ -38,19 +38,6 @@
  </section>
 
 
-
-<div class="jobs-search">
-
- <input
- type="text"
- id="jobsSearchInput"
- placeholder="Kasb yoki kompaniya bo'yicha qidirish"
- >
-
- <button>Qidirish</button>
-
- </div>
-
   <div id="jobsContainer" class="jobs-grid"></div>
   <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
   <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend (5000-port) ishlayotganini tekshiring.</div>
@@ -72,6 +59,12 @@
       <span>Joylashuv *</span>
       <input type="text" name="location" required placeholder="Masalan: Toshkent">
     </label>
+    
+    <label>
+     <span>Maosh</span>
+     <input type="text" name="salary" placeholder="Masalan: 1000$">
+    </label>
+    
     <label>
       <span>Ish turi</span>
       <input type="text" name="type" placeholder="Full-time">
