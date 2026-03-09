@@ -63,8 +63,8 @@ function renderJobs(jobs) {
             <h3 class="job-card-title">${escapeHtml(job.title)}</h3>
             <p class="job-card-company">Kompaniya: ${escapeHtml(job.company)}</p>
             <p class="job-card-location">Joylashuv: ${escapeHtml(job.location)}</p>
-            <p class="job-card-type"><span class="job-type">${escapeHtml(job.type || "Full-time")}</span></p>
-            <p class="job-card-salary"><span class="salary">${escapeHtml(job.salary || "Kelishiladi")}</span></p>
+            <p class="job-card-type">Ish turi: ${escapeHtml(job.type || "Full-time")}</p>
+            <p class="job-card-salary">Maosh: ${escapeHtml(job.salary || "Kelishiladi")}</p>
             <button class="job-card-delete" data-id="${job.id}">Delete</button>
         `;
         jobsContainer.appendChild(card);
