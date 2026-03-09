@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 const API_BASE = window.location.origin;
 
-=======
-const API_BASE = "http://localhost:5000";
->>>>>>> c3f9340b78d8b750fe9edaf4617c06c9280f0d6e
 const jobsContainer = document.getElementById("jobsContainer");
 const jobsLoading = document.getElementById("jobsLoading");
 const jobsError = document.getElementById("jobsError");
