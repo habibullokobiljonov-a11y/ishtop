@@ -215,3 +215,35 @@ button{
  color:#2563eb;
  font-weight:bold;
 }
+.hero{
+background-image:url("job-bg.jpg");
+background-size:cover;
+background-position:center;
+height:400px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.hero-content{
+background:rgba(0,0,0,0.45);
+padding:40px;
+border-radius:12px;
+}
+
+.search-box input{
+padding:12px;
+width:300px;
+border-radius:8px;
+border:none;
+}
+
+.search-box button{
+padding:12px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+}
