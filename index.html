@@ -20,30 +20,37 @@
   </div>
   </header>
 
+  
   <section class="hero">
+
   <div class="hero-content">
+
   <h1>O'zbekistondan ish toping</h1>
   <p>Eng yaxshi vakansiyalar shu yerda</p>
 
-    <div class="search-box">
-      <input type="text" placeholder="Kasb yoki kompaniya">
-      <button>Qidirish</button>
-    </div>
+  <div class="search-box">
+  <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
+  <button>Qidirish</button>
+ </div>
 
-  </div>
-</section>
+ </div>
+
+ </section>
 
 
 
-<section class="jobs" id="jobs">
-  <h2>Vakansiyalar</h2>
-  <div class="jobs-search">
-    <input
-      type="text"
-      id="jobsSearchInput"
-      placeholder="Kasb yoki kompaniya bo'yicha qidirish"
-    >
-  </div>
+<div class="jobs-search">
+
+ <input
+ type="text"
+ id="jobsSearchInput"
+ placeholder="Kasb yoki kompaniya bo'yicha qidirish"
+ >
+
+ <button>Qidirish</button>
+
+ </div>
+
   <div id="jobsContainer" class="jobs-grid"></div>
   <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
   <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend (5000-port) ishlayotganini tekshiring.</div>

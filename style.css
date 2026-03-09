@@ -247,3 +247,112 @@ color:white;
 border:none;
 border-radius:8px;
 }
+body{
+margin:0;
+font-family:Arial;
+background:#f1f5f9;
+}
+
+/* navbar */
+
+header{
+background:#0f172a;
+padding:18px 60px;
+}
+
+.container{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:white;
+}
+
+.logo span{
+color:#ef4444;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:25px;
+}
+
+/* hero */
+
+.hero{
+background-image:url("job-bg.jpg");
+background-size:cover;
+background-position:center;
+height:380px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.hero-content{
+background:rgba(0,0,0,0.5);
+padding:40px;
+border-radius:12px;
+}
+
+.search-box input{
+padding:12px;
+width:300px;
+border:none;
+border-radius:8px;
+}
+
+.search-box button{
+padding:12px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+/* jobs */
+
+.jobs{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.job-card{
+background:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* form */
+
+#add-job{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+#add-job input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+#add-job button{
+background:#ef4444;
+color:white;
+border:none;
+padding:12px;
+border-radius:8px;
+}
