@@ -239,3 +239,11 @@ button{
 button:hover{
   background:#dc2626;
 }
+body{
+  font-family: Arial, sans-serif;
+  background-image: url("job-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+background-image: url("fon.jpg");
