@@ -77,11 +77,15 @@ function escapeHtml(text) {
 }
 // Delete job
 async function deleteJob(id) {
-    const confirmed = window.confirm("Bu vakansiyani o'chirishni istaysizmi?");
+    const password = prompt("Vakansiyani o'chirish uchun admin parolini kiriting:");
+    if (!password) return;
+    const confirmed = window.confirm("Rostdan ham bu vakansiyani o'chirasizmi?");
     if (!confirmed) return;
     try {
         const res = await fetch(`${API_BASE}/jobs/${id}`, {
             method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password })
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || data.success !== true) {
@@ -103,14 +107,16 @@ addJobForm.addEventListener("submit", async (e) => {
     const title = (fd.get("title") || "").trim();
     const company = (fd.get("company") || "").trim();
     const location = (fd.get("location") || "").trim();
-    const salary = (fd.get("salary") || "").trim();
-    const type = (fd.get("type") || "Full-time").trim();
-    if (!title || !company || !location) {
-        formMessage.textContent = "Lavozim, kompaniya va joylashuv majburiy.";
+    const salary = (fd.get("salary") || "").trim() || "Kelishiladi";
+    const type = (fd.get("type") || "").trim() || "Full-time";
+    const password = (fd.get("password") || "").trim();
+
+    if (!title || !company || !location || !password) {
+        formMessage.textContent = "Barcha yulduzchali maydonlarni, shuningdek parolni to'ldirish majburiy.";
         formMessage.className = "form-message error";
         return;
     }
-    const body = { title, company, location, type, salary: type || "Full-time" };
+    const body = { title, company, location, type, salary, password };
     try {
         const res = await fetch(`${API_BASE}/jobs`, {
             method: "POST",

@@ -22,17 +22,28 @@ app.get("/jobs", (req, res) => {
   res.json(jobs);
 });
 
+const ADMIN_PASSWORD = "admin";
+
 app.post("/jobs", (req, res) => {
-  const { title, company, location, type } = req.body;
+  const { title, company, location, type, salary, password } = req.body;
+  if (password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ success: false, message: "Parol noto'g'ri! Faqat adminlar vakansiya qo'sha oladi." });
+  }
+
   if (!title || !company || !location) {
     return res.status(400).json({ success: false, message: "Required fields" });
   }
-  const newJob = { id: Date.now(), title, company, location, type: type || "Full-time" };
+  const newJob = { id: Date.now(), title, company, location, type: type || "Full-time", salary: salary || "Kelishiladi" };
   jobs.push(newJob);
   res.status(201).json({ success: true, data: newJob });
 });
 
 app.delete("/jobs/:id", (req, res) => {
+  const { password } = req.body;
+  if (password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ success: false, message: "Parol noto'g'ri! Faqat adminlar o'chira oladi." });
+  }
+
   const jobId = Number(req.params.id);
   jobs = jobs.filter(job => job.id !== jobId);
   res.json({ success: true });
