@@ -1,86 +1,123 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IshTop.uz - O'zbekistondan ish topish</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-  <div class="container">
-    <div class="logo">Ish<span>Top</span></div>
-    
-    <nav>
-      <a href="#jobs">Vakansiyalar</a>
-      <a href="#add-job">Vakansiya qo'shish</a>
-    </nav>
-  
-  </div>
+  <header>
+    <div class="container">
+      <div class="logo">Ish<span>Top</span></div>
+
+      <nav>
+        <a href="#jobs">Vakansiyalar</a>
+        <a href="#resumes">Rezyumelar</a>
+        <a href="#add-job">Vakansiya qo'shish</a>
+      </nav>
+
+    </div>
   </header>
 
-  
+
   <section class="hero">
 
-  <div class="hero-content">
+    <div class="hero-content">
 
-  <h1>O'zbekistondan ish toping</h1>
-  <p>Eng yaxshi vakansiyalar shu yerda</p>
+      <h1>O'zbekistondan ish toping</h1>
+      <p>Eng yaxshi vakansiyalar shu yerda</p>
 
-  <div class="search-box">
-  <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
-  <button>Qidirish</button>
- </div>
+      <div class="search-box">
+        <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
+        <button>Qidirish</button>
+      </div>
 
- </div>
+    </div>
 
- </section>
+  </section>
 
 
   <div id="jobsContainer" class="jobs-grid"></div>
   <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
-  <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend (5000-port) ishlayotganini tekshiring.</div>
-  <div id="jobsEmpty" class="info-text" style="display: none;">Hozircha vakansiya yo'q. Birinchi vakansiyani qo'shing.</div>
-</section>
+  <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend
+    (5000-port) ishlayotganini tekshiring.</div>
+  <div id="jobsEmpty" class="info-text" style="display: none;">Hozircha vakansiya yo'q. Birinchi vakansiyani qo'shing.
+  </div>
+  </section>
 
-<section class="add-job-section" id="add-job">
-  <h2>Vakansiya qo'shish</h2>
-  <form id="addJobForm" class="add-job-form">
-    <label>
-      <span>Lavozim *</span>
-      <input type="text" name="title" required placeholder="Masalan: Frontend Developer">
-    </label>
-    <label>
-      <span>Kompaniya *</span>
-      <input type="text" name="company" required placeholder="Kompaniya nomi">
-    </label>
-    <label>
-      <span>Joylashuv *</span>
-      <input type="text" name="location" required placeholder="Masalan: Toshkent">
-    </label>
-    
-    <label>
-     <span>Maosh</span>
-     <input type="text" name="salary" placeholder="Masalan: 1000$">
-    </label>
-    
-    <label>
-      <span>Ish turi</span>
-      <input type="text" name="type" placeholder="Full-time">
-    </label>
-    <label>
-      <span>Admin Parol *</span>
-      <input type="password" name="password" required placeholder="Faqat admin uchun parol">
-    </label>
-    <button type="submit">Vakansiyani qo'shish</button>
-  </form>
-  <p id="formMessage" class="form-message"></p>
-</section>
+  <section class="add-job-section" id="resumes" style="margin-top: 20px;">
+    <h2 style="text-align: center; margin-bottom: 20px;">Ish izlovchilar (Rezyumelar)</h2>
 
-<script src="script.js"></script>
+    <div id="resumesContainer" class="jobs-grid"></div>
+    <div id="resumesLoading" class="info-text">Rezyumelar yuklanmoqda...</div>
+    <div id="resumesEmpty" class="info-text" style="display: none;">Hozircha rezyume yo'q. Birinchi bo'lib qo'shing.
+    </div>
+
+    <h2 style="margin-top: 40px; text-align: center;">Rezyume qoldirish</h2>
+    <form id="addResumeForm" class="add-job-form">
+      <label>
+        <span>Ismingiz *</span>
+        <input type="text" name="name" required placeholder="To'liq ismingiz">
+      </label>
+      <label>
+        <span>Kasbingiz/Sohangiz *</span>
+        <input type="text" name="profession" required placeholder="Masalan: Frontend Developer">
+      </label>
+      <label>
+        <span>Tajribangiz</span>
+        <input type="text" name="experience" placeholder="Masalan: 2 yil">
+      </label>
+      <label>
+        <span>Aloqa *</span>
+        <input type="text" name="contact" required placeholder="Telefon raqam yoki Telegram">
+      </label>
+      <button type="submit">Rezyumeni jo'natish</button>
+    </form>
+    <p id="resumeFormMessage" class="form-message"></p>
+  </section>
+
+  <section class="add-job-section" id="add-job">
+    <h2>Vakansiya qo'shish</h2>
+    <form id="addJobForm" class="add-job-form">
+      <label>
+        <span>Lavozim *</span>
+        <input type="text" name="title" required placeholder="Masalan: Frontend Developer">
+      </label>
+      <label>
+        <span>Kompaniya *</span>
+        <input type="text" name="company" required placeholder="Kompaniya nomi">
+      </label>
+      <label>
+        <span>Joylashuv *</span>
+        <input type="text" name="location" required placeholder="Masalan: Toshkent">
+      </label>
+
+      <label>
+        <span>Maosh</span>
+        <input type="text" name="salary" placeholder="Masalan: 1000$">
+      </label>
+
+      <label>
+        <span>Ish turi</span>
+        <input type="text" name="type" placeholder="Full-time">
+      </label>
+      <label>
+        <span>Admin Parol *</span>
+        <input type="password" name="password" required placeholder="Faqat admin uchun parol">
+      </label>
+      <button type="submit">Vakansiyani qo'shish</button>
+    </form>
+    <p id="formMessage" class="form-message"></p>
+  </section>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
 <footer>
-© 2026 IshTop.uz — Barcha huquqlar himoyalangan
+  © 2026 IshTop.uz — Barcha huquqlar himoyalangan
 </footer>

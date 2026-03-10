@@ -1,7 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const app = express();
+
+// Basic security middleware
+app.use(helmet({ contentSecurityPolicy: false })); // allow local scripts
+
+// Rate limiting (max 100 requests per 15 minutes per IP)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { success: false, message: "Juda ko'p so'rov yuborildi. Iltimos, keyinroq urinib ko'ring." }
+});
+app.use(limiter);
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +33,32 @@ let jobs = [
 
 app.get("/jobs", (req, res) => {
   res.json(jobs);
+});
+
+// RESUMES ENDPOINTS
+let resumes = [
+  { id: 1, name: "Ali Valiyev", profession: "Frontend Developer", experience: "2 yil", contact: "@ali_dev" },
+  { id: 2, name: "Diyora Rustamova", profession: "UI/UX Designer", experience: "1 yil", contact: "+998901234567" }
+];
+
+app.get("/resumes", (req, res) => {
+  res.json(resumes);
+});
+
+app.post("/resumes", (req, res) => {
+  const { name, profession, experience, contact } = req.body;
+  if (!name || !profession || !contact) {
+    return res.status(400).json({ success: false, message: "Ism, kasb va aloqa ma'lumotlari majburiy." });
+  }
+
+  // Basic validation (prevent extreme lengths)
+  if (name.length > 50 || profession.length > 50 || contact.length > 50) {
+    return res.status(400).json({ success: false, message: "Kiritilgan ma'lumotlar juda uzun." });
+  }
+
+  const newResume = { id: Date.now(), name, profession, experience: experience || "Keltirilmagan", contact };
+  resumes.push(newResume);
+  res.status(201).json({ success: true, data: newResume });
 });
 
 const ADMIN_PASSWORD = "admin";

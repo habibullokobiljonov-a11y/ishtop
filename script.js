@@ -7,7 +7,16 @@ const jobsEmpty = document.getElementById("jobsEmpty");
 const addJobForm = document.getElementById("addJobForm");
 const formMessage = document.getElementById("formMessage");
 const jobsSearchInput = document.getElementById("jobsSearchInput");
+
+// Resume elements
+const resumesContainer = document.getElementById("resumesContainer");
+const resumesLoading = document.getElementById("resumesLoading");
+const resumesEmpty = document.getElementById("resumesEmpty");
+const addResumeForm = document.getElementById("addResumeForm");
+const resumeFormMessage = document.getElementById("resumeFormMessage");
+
 let allJobs = [];
+let allResumes = [];
 // Header scroll
 window.addEventListener("scroll", () => {
     const header = document.querySelector("header");
@@ -141,9 +150,99 @@ addJobForm.addEventListener("submit", async (e) => {
         formMessage.className = "form-message error";
     }
 });
+
+// GET http://localhost:5000/resumes
+async function fetchResumes() {
+    if (!resumesLoading) return;
+    resumesLoading.style.display = "block";
+    resumesEmpty.style.display = "none";
+    resumesContainer.innerHTML = "";
+    try {
+        const res = await fetch(`${API_BASE}/resumes`);
+        if (!res.ok) throw new Error("Server error");
+        const data = await res.json();
+        allResumes = data || [];
+        renderResumes(allResumes);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        resumesLoading.style.display = "none";
+    }
+}
+
+// Render resumes function
+function renderResumes(resumesList) {
+    resumesContainer.innerHTML = "";
+    if (!resumesList.length) {
+        resumesEmpty.style.display = "block";
+        return;
+    }
+    resumesEmpty.style.display = "none";
+    resumesList.forEach((resume, i) => {
+        const card = document.createElement("div");
+        card.className = "job-card resume-card";
+        card.style.animationDelay = `${i * 0.05}s`;
+        card.style.borderLeft = "5px solid #16a34a"; // Green border to distinguish
+
+        card.innerHTML = `
+            <h3 class="job-card-title resume-name">${escapeHtml(resume.name)}</h3>
+            <p class="job-card-company resume-profession"><b>Kasb:</b> ${escapeHtml(resume.profession)}</p>
+            <p class="job-card-location resume-experience"><b>Tajriba:</b> ${escapeHtml(resume.experience || "Yo'q")}</p>
+            <p class="job-card-type resume-contact"><b>Aloqa:</b> ${escapeHtml(resume.contact)}</p>
+        `;
+        resumesContainer.appendChild(card);
+    });
+}
+
+// Add resume form submission
+if (addResumeForm) {
+    addResumeForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        resumeFormMessage.textContent = "";
+        resumeFormMessage.className = "form-message";
+        const fd = new FormData(addResumeForm);
+
+        const name = (fd.get("name") || "").trim();
+        const profession = (fd.get("profession") || "").trim();
+        const experience = (fd.get("experience") || "").trim();
+        const contact = (fd.get("contact") || "").trim();
+
+        if (!name || !profession || !contact) {
+            resumeFormMessage.textContent = "Ism, Kasb va Aloqa maydonlari majburiy.";
+            resumeFormMessage.className = "form-message error";
+            return;
+        }
+
+        const body = { name, profession, experience, contact };
+
+        try {
+            const res = await fetch(`${API_BASE}/resumes`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                resumeFormMessage.textContent = data.message || "Xatolik yuz berdi";
+                resumeFormMessage.className = "form-message error";
+                return;
+            }
+            resumeFormMessage.textContent = "Rezyume muvaffaqiyatli saqlandi!";
+            resumeFormMessage.className = "form-message success";
+            addResumeForm.reset();
+            fetchResumes();
+        } catch (err) {
+            console.error(err);
+            resumeFormMessage.textContent = "Serverga ulanishda xatolik.";
+            resumeFormMessage.className = "form-message error";
+        }
+    });
+}
+
 // Initialize
 document.addEventListener("DOMContentLoaded", () => {
     fetchJobs();
+    fetchResumes();
     if (jobsSearchInput) {
         jobsSearchInput.addEventListener("input", applyJobsFilter);
     }
