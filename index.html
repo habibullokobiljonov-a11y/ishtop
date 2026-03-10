@@ -9,6 +9,8 @@
 </head>
 
 <body>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
 
   <header>
     <div class="container">
@@ -45,16 +47,19 @@
   <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
   <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend
     (5000-port) ishlayotganini tekshiring.</div>
-  <div id="jobsEmpty" class="info-text" style="display: none;">Hozircha vakansiya yo'q. Birinchi vakansiyani qo'shing.
+  <div id="jobsEmpty" class="empty-state" style="display: none;">
+    <h3>Hozircha vakansiya yo'q</h3>
+    <p>Qidiruv bo'yicha hech narsa topilmadi yoki hali qo'shilmagan.</p>
   </div>
-  </section>
 
   <section class="add-job-section" id="resumes" style="margin-top: 20px;">
     <h2 style="text-align: center; margin-bottom: 20px;">Ish izlovchilar (Rezyumelar)</h2>
 
     <div id="resumesContainer" class="jobs-grid"></div>
     <div id="resumesLoading" class="info-text">Rezyumelar yuklanmoqda...</div>
-    <div id="resumesEmpty" class="info-text" style="display: none;">Hozircha rezyume yo'q. Birinchi bo'lib qo'shing.
+    <div id="resumesEmpty" class="empty-state" style="display: none;">
+      <h3>Hozircha rezyume yo'q</h3>
+      <p>Bu yerga birinchi bo'lib o'z rezyumengizni qo'shing!</p>
     </div>
 
     <h2 style="margin-top: 40px; text-align: center;">Rezyume qoldirish</h2>

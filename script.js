@@ -22,6 +22,24 @@ window.addEventListener("scroll", () => {
     const header = document.querySelector("header");
     header.classList.toggle("scrolled", window.scrollY > 50);
 });
+
+// Toast Notification System
+function showToast(message, type = "success") {
+    const container = document.getElementById("toastContainer");
+    if (!container) return;
+
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Auto remove after animation (3s total)
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
 // GET http://localhost:5000/jobs
 async function fetchJobs() {
     jobsLoading.style.display = "block";
@@ -102,9 +120,10 @@ async function deleteJob(id) {
         }
         allJobs = allJobs.filter((job) => job.id !== id);
         applyJobsFilter();
+        showToast("Vakansiya arxivlandi", "success");
     } catch (err) {
         console.error(err);
-        alert("Vakansiyani o'chirishda xatolik yuz berdi.");
+        showToast(err.message || "Vakansiyani o'chirishda xatolik yuz berdi.", "error");
     }
 }
 // Add job form submission
@@ -121,8 +140,7 @@ addJobForm.addEventListener("submit", async (e) => {
     const password = (fd.get("password") || "").trim();
 
     if (!title || !company || !location || !password) {
-        formMessage.textContent = "Barcha yulduzchali maydonlarni, shuningdek parolni to'ldirish majburiy.";
-        formMessage.className = "form-message error";
+        showToast("Barcha yulduzchali maydonlarni, shuningdek parolni to'ldirish majburiy.", "error");
         return;
     }
     const body = { title, company, location, type, salary, password };
@@ -136,18 +154,15 @@ addJobForm.addEventListener("submit", async (e) => {
         });
         const data = await res.json();
         if (!res.ok) {
-            formMessage.textContent = data.message || "Xatolik yuz berdi";
-            formMessage.className = "form-message error";
+            showToast(data.message || "Xatolik yuz berdi", "error");
             return;
         }
-        formMessage.textContent = "Vakansiya muvaffaqiyatli qo'shildi!";
-        formMessage.className = "form-message success";
+        showToast("Vakansiya muvaffaqiyatli qo'shildi!", "success");
         addJobForm.reset();
         fetchJobs();
     } catch (err) {
         console.error(err);
-        formMessage.textContent = "Serverga ulanishda xatolik. Backend (5000-port) ishlayotganini tekshiring.";
-        formMessage.className = "form-message error";
+        showToast("Serverga ulanishda xatolik. Backend (5000-port) ishlayotganini tekshiring.", "error");
     }
 });
 
@@ -208,8 +223,7 @@ if (addResumeForm) {
         const contact = (fd.get("contact") || "").trim();
 
         if (!name || !profession || !contact) {
-            resumeFormMessage.textContent = "Ism, Kasb va Aloqa maydonlari majburiy.";
-            resumeFormMessage.className = "form-message error";
+            showToast("Ism, Kasb va Aloqa maydonlari majburiy.", "error");
             return;
         }
 
@@ -223,18 +237,15 @@ if (addResumeForm) {
             });
             const data = await res.json();
             if (!res.ok) {
-                resumeFormMessage.textContent = data.message || "Xatolik yuz berdi";
-                resumeFormMessage.className = "form-message error";
+                showToast(data.message || "Xatolik yuz berdi", "error");
                 return;
             }
-            resumeFormMessage.textContent = "Rezyume muvaffaqiyatli saqlandi!";
-            resumeFormMessage.className = "form-message success";
+            showToast("Rezyume muvaffaqiyatli saqlandi!", "success");
             addResumeForm.reset();
             fetchResumes();
         } catch (err) {
             console.error(err);
-            resumeFormMessage.textContent = "Serverga ulanishda xatolik.";
-            resumeFormMessage.className = "form-message error";
+            showToast("Serverga ulanishda xatolik.", "error");
         }
     });
 }
