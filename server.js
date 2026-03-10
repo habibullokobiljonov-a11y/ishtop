@@ -9,7 +9,13 @@ app.use(express.static(path.join(__dirname)));
 
 let jobs = [
   { id: 1, title: "Frontend Developer", company: "IT Solutions", location: "Toshkent", type: "Full-time" },
-  { id: 2, title: "Backend Developer", company: "Tech Group", location: "Samarkand", type: "Remote" }
+  { id: 2, title: "Backend Developer", company: "Tech Group", location: "Samarqand", type: "Remote" },
+  { id: 3, title: "UI/UX Designer", company: "Creative Studio", location: "Toshkent", type: "Part-time" },
+  { id: 4, title: "Project Manager", company: "SoftDev", location: "Farg'ona", type: "Full-time" },
+  { id: 5, title: "System Administrator", company: "Bank System", location: "Buxoro", type: "Full-time" },
+  { id: 6, title: "Data Analyst", company: "DataTech", location: "Toshkent", type: "Remote" },
+  { id: 7, title: "HR Manager", company: "HR Consulting", location: "Andijon", type: "Full-time" },
+  { id: 8, title: "DevOps Engineer", company: "Cloud Services", location: "Toshkent", type: "Remote" }
 ];
 
 app.get("/jobs", (req, res) => {
