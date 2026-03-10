@@ -46,10 +46,10 @@ function showToast(message, type = "success") {
 
 // GET http://localhost:5000/jobs
 async function fetchJobs() {
-    jobsLoading.style.display = "block";
-    jobsError.style.display = "none";
-    jobsEmpty.style.display = "none";
-    jobsContainer.innerHTML = "";
+    if (jobsLoading) jobsLoading.style.display = "block";
+    if (jobsError) jobsError.style.display = "none";
+    if (jobsEmpty) jobsEmpty.style.display = "none";
+    if (jobsContainer) jobsContainer.innerHTML = "";
     try {
         const res = await fetch(`${API_BASE}/jobs`);
         if (!res.ok) throw new Error("Server error");
@@ -58,16 +58,17 @@ async function fetchJobs() {
         applyJobsFilter();
     } catch (err) {
         console.error(err);
-        jobsError.style.display = "block";
+        if (jobsError) jobsError.style.display = "block";
     } finally {
-        jobsLoading.style.display = "none";
+        if (jobsLoading) jobsLoading.style.display = "none";
     }
 }
 // Search filter function
 function applyJobsFilter() {
+    if (!jobsContainer) return;
     jobsContainer.innerHTML = "";
     if (!allJobs.length) {
-        jobsEmpty.style.display = "block";
+        if (jobsEmpty) jobsEmpty.style.display = "block";
         return;
     }
     const query = (jobsSearchInput?.value || "").trim().toLowerCase();
@@ -77,10 +78,10 @@ function applyJobsFilter() {
         return title.includes(query) || company.includes(query);
     });
     if (!filtered.length) {
-        jobsEmpty.style.display = "block";
+        if (jobsEmpty) jobsEmpty.style.display = "block";
         return;
     }
-    jobsEmpty.style.display = "none";
+    if (jobsEmpty) jobsEmpty.style.display = "none";
     renderJobs(filtered);
 }
 // Render jobs function
@@ -196,12 +197,13 @@ async function fetchResumes() {
 
 // Render resumes function
 function renderResumes(resumesList) {
+    if (!resumesContainer) return;
     resumesContainer.innerHTML = "";
     if (!resumesList.length) {
-        resumesEmpty.style.display = "block";
+        if (resumesEmpty) resumesEmpty.style.display = "block";
         return;
     }
-    resumesEmpty.style.display = "none";
+    if (resumesEmpty) resumesEmpty.style.display = "none";
     resumesList.forEach((resume, i) => {
         const card = document.createElement("div");
         card.className = "job-card resume-card";
