@@ -61,6 +61,17 @@ app.post("/resumes", (req, res) => {
   res.status(201).json({ success: true, data: newResume });
 });
 
+app.delete("/resumes/:id", (req, res) => {
+  const { password } = req.body;
+  if (password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ success: false, message: "Parol noto'g'ri! Faqat adminlar o'chira oladi." });
+  }
+
+  const resumeId = Number(req.params.id);
+  resumes = resumes.filter(r => r.id !== resumeId);
+  res.json({ success: true });
+});
+
 const ADMIN_PASSWORD = "admin";
 
 app.post("/jobs", (req, res) => {

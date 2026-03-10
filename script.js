@@ -208,11 +208,14 @@ function renderResumes(resumesList) {
         card.style.animationDelay = `${i * 0.05}s`;
         card.style.borderLeft = "5px solid #16a34a"; // Green border to distinguish
 
+        const deleteBtnHtml = window.IS_ADMIN ? `<button class="resume-card-delete" data-id="${resume.id}" style="background:#ef4444;color:white;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;margin-top:10px;">O'chirish</button>` : '';
+
         card.innerHTML = `
             <h3 class="job-card-title resume-name">${escapeHtml(resume.name)}</h3>
             <p class="job-card-company resume-profession"><b>Kasb:</b> ${escapeHtml(resume.profession)}</p>
             <p class="job-card-location resume-experience"><b>Tajriba:</b> ${escapeHtml(resume.experience || "Yo'q")}</p>
             <p class="job-card-type resume-contact"><b>Aloqa:</b> ${escapeHtml(resume.contact)}</p>
+            ${deleteBtnHtml}
         `;
         resumesContainer.appendChild(card);
     });
@@ -279,10 +282,26 @@ async function deleteResume(id) {
     const password = adminToken || prompt("Parolni kiriting:");
     if (!password) return;
 
-    // Simplification for the demo: Just remove it locally since backend resumes delete API isn't built yet,
-    // or we assume it's synced. Let's just hide the card. 
-    showToast("Rezyume arxivlandi (demo)", "success");
-    fetchResumes();
+    const confirmed = window.confirm("Rostdan ham bu rezyumeni o'chirasizmi?");
+    if (!confirmed) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/resumes/${id}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success !== true) {
+            throw new Error(data.message || "Error deleting resume");
+        }
+        allResumes = allResumes.filter((r) => r.id !== id);
+        renderResumes(allResumes);
+        showToast("Rezyume o'chirildi", "success");
+    } catch (err) {
+        console.error(err);
+        showToast(err.message || "Rezyumeni o'chirishda xatolik yuz berdi.", "error");
+    }
 }
 
 // Initialize
@@ -297,10 +316,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Attach deleters dynamically
     if (window.IS_ADMIN) {
         document.body.addEventListener("click", (e) => {
-            const btn = e.target.closest(".job-card-delete");
-            if (btn) {
-                const id = Number(btn.dataset.id);
+            const btnJob = e.target.closest(".job-card-delete");
+            if (btnJob) {
+                const id = Number(btnJob.dataset.id);
                 if (id) deleteJob(id);
+            }
+            const btnRes = e.target.closest(".resume-card-delete");
+            if (btnRes) {
+                const id = Number(btnRes.dataset.id);
+                if (id) deleteResume(id);
             }
         });
     }
