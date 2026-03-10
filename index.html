@@ -4,125 +4,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IshTop.uz - O'zbekistondan ish topish</title>
+  <title>IshTop.uz - Portalga kirish</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .roles-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .role-card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px 30px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .role-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border-bottom: 4px solid #2563eb;
+    }
+
+    .role-card h2 {
+      color: #1e293b;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .role-card p {
+      color: #64748b;
+      margin-bottom: 25px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .role-card:hover .btn {
+      background: #1d4ed8;
+    }
+
+    .admin-card:hover {
+      border-bottom: 4px solid #ef4444;
+    }
+
+    .admin-card .btn {
+      background: #ef4444;
+    }
+
+    .admin-card:hover .btn {
+      background: #dc2626;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Toast Notification Container -->
-  <div id="toastContainer" class="toast-container"></div>
-
-  <header>
-    <div class="container">
-      <div class="logo">Ish<span>Top</span></div>
-
-      <nav>
-        <a href="#jobs">Vakansiyalar</a>
-        <a href="#resumes">Rezyumelar</a>
-        <a href="#add-job">Vakansiya qo'shish</a>
-      </nav>
-
+  <header style="padding: 15px 0;">
+    <div class="container" style="justify-content: center;">
+      <div class="logo">Ish<span>Top</span> Portal</div>
     </div>
   </header>
 
-
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <h1>O'zbekistondan ish toping</h1>
-      <p>Eng yaxshi vakansiyalar shu yerda</p>
-
-      <div class="search-box">
-        <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
-        <button>Qidirish</button>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <div id="jobsContainer" class="jobs-grid"></div>
-  <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
-  <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend
-    (5000-port) ishlayotganini tekshiring.</div>
-  <div id="jobsEmpty" class="empty-state" style="display: none;">
-    <h3>Hozircha vakansiya yo'q</h3>
-    <p>Qidiruv bo'yicha hech narsa topilmadi yoki hali qo'shilmagan.</p>
+  <div style="text-align: center; margin-top: 60px; padding: 0 20px;">
+    <h1 style="font-size: 36px; color: #1e293b;">O'zingizga mos rolni tanlang</h1>
+    <p style="color: #64748b; margin-top: 10px; font-size: 18px;">Platformadan qanday maqsadda foydalanmoqchisiz?</p>
   </div>
 
-  <section class="add-job-section" id="resumes" style="margin-top: 20px;">
-    <h2 style="text-align: center; margin-bottom: 20px;">Ish izlovchilar (Rezyumelar)</h2>
+  <div class="roles-container">
+    <!-- Ish izlovchi -->
+    <a href="seeker.html" class="role-card">
+      <h2>Ish qidiryapman</h2>
+      <p>O'zbekiston bo'ylab yuzlab ochiq ish o'rinlarini ko'ring va rezyumengizni ish beruvchilarga yuboring.</p>
+      <span class="btn">Kirish (Ishchi)</span>
+    </a>
 
-    <div id="resumesContainer" class="jobs-grid"></div>
-    <div id="resumesLoading" class="info-text">Rezyumelar yuklanmoqda...</div>
-    <div id="resumesEmpty" class="empty-state" style="display: none;">
-      <h3>Hozircha rezyume yo'q</h3>
-      <p>Bu yerga birinchi bo'lib o'z rezyumengizni qo'shing!</p>
-    </div>
+    <!-- Ish beruvchi -->
+    <a href="employer.html" class="role-card">
+      <h2>Men Ish beruvchiman</h2>
+      <p>Kompaniyangiz uchun yangi vakansiya e'lon qiling va minglab iste'dodli kadrlarning rezyumelarini ko'rib
+        chiqing.</p>
+      <span class="btn">Kirish (Kompaniya)</span>
+    </a>
 
-    <h2 style="margin-top: 40px; text-align: center;">Rezyume qoldirish</h2>
-    <form id="addResumeForm" class="add-job-form">
-      <label>
-        <span>Ismingiz *</span>
-        <input type="text" name="name" required placeholder="To'liq ismingiz">
-      </label>
-      <label>
-        <span>Kasbingiz/Sohangiz *</span>
-        <input type="text" name="profession" required placeholder="Masalan: Frontend Developer">
-      </label>
-      <label>
-        <span>Tajribangiz</span>
-        <input type="text" name="experience" placeholder="Masalan: 2 yil">
-      </label>
-      <label>
-        <span>Aloqa *</span>
-        <input type="text" name="contact" required placeholder="Telefon raqam yoki Telegram">
-      </label>
-      <button type="submit">Rezyumeni jo'natish</button>
-    </form>
-    <p id="resumeFormMessage" class="form-message"></p>
-  </section>
+    <!-- Admin -->
+    <a href="admin.html" class="role-card admin-card">
+      <h2>Admin Panel</h2>
+      <p>Saytdagi barcha e'lonlar va profilarni nazorat qilasiz. Faqat maxsus parol bilan kirish mumkin.</p>
+      <span class="btn">Kirish (Admin)</span>
+    </a>
+  </div>
 
-  <section class="add-job-section" id="add-job">
-    <h2>Vakansiya qo'shish</h2>
-    <form id="addJobForm" class="add-job-form">
-      <label>
-        <span>Lavozim *</span>
-        <input type="text" name="title" required placeholder="Masalan: Frontend Developer">
-      </label>
-      <label>
-        <span>Kompaniya *</span>
-        <input type="text" name="company" required placeholder="Kompaniya nomi">
-      </label>
-      <label>
-        <span>Joylashuv *</span>
-        <input type="text" name="location" required placeholder="Masalan: Toshkent">
-      </label>
-
-      <label>
-        <span>Maosh</span>
-        <input type="text" name="salary" placeholder="Masalan: 1000$">
-      </label>
-
-      <label>
-        <span>Ish turi</span>
-        <input type="text" name="type" placeholder="Full-time">
-      </label>
-      <label>
-        <span>Admin Parol *</span>
-        <input type="password" name="password" required placeholder="Faqat admin uchun parol">
-      </label>
-      <button type="submit">Vakansiyani qo'shish</button>
-    </form>
-    <p id="formMessage" class="form-message"></p>
-  </section>
-
-  <script src="script.js"></script>
+  <footer>
+    © 2026 IshTop.uz — Barcha huquqlar himoyalangan
+  </footer>
 </body>
 
 </html>
-<footer>
-  © 2026 IshTop.uz — Barcha huquqlar himoyalangan
-</footer>

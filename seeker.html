@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ish izlovchi - IshTop.uz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Ish<span>Top</span>
+                    <small style="color:white;font-size:12px;">(Izlovchi)</small></a></div>
+            <nav>
+                <a href="#jobs">Barcha Vakansiyalar</a>
+                <a href="#resumes">Mening Rezyumemni Qoldirish</a>
+                <a href="index.html"
+                    style="background:#ef4444;padding:8px 15px;border-radius:6px;margin-left:15px;">Chiqish</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" style="height: 250px;">
+        <div class="hero-content">
+            <h1>O'zbekistondan ish toping</h1>
+            <p>O'z sohangizdagi eng yaxshi vakansiyalarni izlang</p>
+            <div class="search-box">
+                <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
+                <button>Qidirish</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="jobsContainer" class="jobs-grid"></div>
+    <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
+    <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend
+        ishlayotganini tekshiring.</div>
+    <div id="jobsEmpty" class="empty-state" style="display: none;">
+        <h3>Hozircha vakansiya yo'q</h3>
+        <p>Qidiruv bo'yicha hech narsa topilmadi yoki hali qo'shilmagan.</p>
+    </div>
+
+    <section class="add-job-section" id="resumes" style="margin-top: 40px;">
+        <h2 style="text-align: center;">Rezyume qoldirish</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Kompaniyalar sizni topishi uchun
+            ma'lumotlaringizni to'ldiring</p>
+        <form id="addResumeForm" class="add-job-form">
+            <label>
+                <span>Ismingiz *</span>
+                <input type="text" name="name" required placeholder="To'liq ismingiz">
+            </label>
+            <label>
+                <span>Kasbingiz/Sohangiz *</span>
+                <input type="text" name="profession" required placeholder="Masalan: Frontend Developer">
+            </label>
+            <label>
+                <span>Tajribangiz</span>
+                <input type="text" name="experience" placeholder="Masalan: 2 yil">
+            </label>
+            <label>
+                <span>Aloqa *</span>
+                <input type="text" name="contact" required placeholder="Telefon raqam yoki Telegram">
+            </label>
+            <button type="submit">Rezyumeni jo'natish</button>
+        </form>
+    </section>
+
+    <footer>© 2026 IshTop.uz — Barcha huquqlar himoyalangan</footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

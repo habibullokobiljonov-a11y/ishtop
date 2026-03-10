@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - IshTop.uz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Admin Login Overlay -->
+    <div id="adminLoginOverlay"
+        style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;">
+        <div style="background:white;padding:30px;border-radius:12px;text-align:center;width:350px;">
+            <h2 style="margin-bottom:15px;color:#1e293b;">Admin Autentifikatsiyasi</h2>
+            <p style="margin-bottom:20px;color:#64748b;font-size:14px;">Boshqaruv paneliga kirish uchun parolni kiriting
+                (parol: admin)</p>
+            <input type="password" id="adminPasswordInput" placeholder="Parol"
+                style="width:100%;padding:10px;margin-bottom:15px;border:1px solid #ddd;border-radius:6px;">
+            <button id="adminLoginBtn" class="btn" style="width:100%;border:none;cursor:pointer;">Kirish</button>
+            <a href="index.html"
+                style="display:block;margin-top:15px;color:#ef4444;text-decoration:none;font-size:14px;">Orqaga
+                qaytish</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Ish<span>Top</span>
+                    <small style="color:white;font-size:12px;">(Boshqaruv Paneli)</small></a></div>
+            <nav>
+                <a href="#jobs">Barcha Vakansiyalar</a>
+                <a href="#resumes">Barcha Rezyumelar</a>
+                <a href="index.html"
+                    style="background:#ef4444;padding:8px 15px;border-radius:6px;margin-left:15px;">Chiqish</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- We pass an invisible global attribute so script.js knows it's admin -->
+    <script>window.IS_ADMIN = true;</script>
+
+    <section id="jobs" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+        <h2 style="text-align: center; margin-bottom: 20px;">Barcha Vakansiyalarni Boshqarish</h2>
+        <div id="jobsContainer" class="jobs-grid"></div>
+        <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
+        <div id="jobsEmpty" class="empty-state" style="display: none;">
+            <h3>Hozircha vakansiya yo'q</h3>
+            <p>Saytda faol e'lonlar mavjud emas.</p>
+        </div>
+    </section>
+
+    <hr style="margin: 50px 0; border: none; border-top: 1px solid #ddd;">
+
+    <section id="resumes" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+        <h2 style="text-align: center; margin-bottom: 20px;">Rezyumelarni Boshqarish</h2>
+        <div id="resumesContainer" class="jobs-grid"></div>
+        <div id="resumesLoading" class="info-text">Rezyumelar yuklanmoqda...</div>
+        <div id="resumesEmpty" class="empty-state" style="display: none;">
+            <h3>Hozircha rezyume yo'q</h3>
+            <p>Foydalanuvchilar hali rezyume qoldirishmagan.</p>
+        </div>
+    </section>
+
+    <footer>© 2026 IshTop.uz — Barcha huquqlar himoyalangan</footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
