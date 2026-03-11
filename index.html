@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>IshTop.uz — Ishga kirish va ish topish platformasi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -228,7 +229,10 @@
 
   <!-- RESUMES LIST -->
   <section class="jobs-section" style="background:#f0fdf4;">
-    <h2>👥 Ish Izlovchilar (Rezyumelar)</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+      <h2 style="margin-bottom:0;">👥 Ish Izlovchilar (Rezyumelar)</h2>
+      <button onclick="document.getElementById('resumeModal').style.display='flex'" style="background:#16a34a;color:white;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">📄 Rezyume qoldirish</button>
+    </div>
     <div id="resumesContainer" class="jobs-grid"></div>
     <div id="resumesLoading" class="info-text">Yuklanmoqda...</div>
     <div id="resumesEmpty" class="empty-state" style="display:none;">
@@ -236,6 +240,23 @@
       <p>Birinchi bo'lib o'z rezyumengizni qoldiring.</p>
     </div>
   </section>
+
+  <!-- RESUME MODAL -->
+  <div id="resumeModal" style="display:none;position:fixed;inset:0;background:rgba(10,20,45,0.7);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:16px;padding:36px 32px;width:100%;max-width:460px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+      <button onclick="document.getElementById('resumeModal').style.display='none'" style="position:absolute;top:14px;right:18px;background:none;border:none;font-size:22px;cursor:pointer;color:#94a3b8;">×</button>
+      <h2 style="margin-bottom:6px;font-size:22px;color:#1e293b;">📄 Rezyume Qoldirish</h2>
+      <p style="color:#64748b;font-size:14px;margin-bottom:20px;">Ish beruvchilar siz bilan bog'lanishi uchun ma'lumotlaringizni kiriting</p>
+      <form id="resumeModalForm">
+        <label style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;font-size:14px;font-weight:500;color:#374151;">Ismingiz *<input type="text" name="name" required placeholder="To'liq ismingiz" style="padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:15px;outline:none;"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;font-size:14px;font-weight:500;color:#374151;">Kasbingiz *<input type="text" name="profession" required placeholder="Masalan: Frontend Developer" style="padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:15px;outline:none;"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;font-size:14px;font-weight:500;color:#374151;">Tajriba<input type="text" name="experience" placeholder="Masalan: 2 yil" style="padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:15px;outline:none;"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px;font-size:14px;font-weight:500;color:#374151;">Aloqa *<input type="text" name="contact" required placeholder="+998 90 123 45 67" style="padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:15px;outline:none;"></label>
+        <button type="submit" style="width:100%;padding:13px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Rezyumeni jo'natish</button>
+        <div id="resumeModalMsg" style="display:none;text-align:center;font-size:14px;margin-top:10px;padding:10px;border-radius:8px;"></div>
+      </form>
+    </div>
+  </div>
 
   <footer>© 2026 IshTop.uz — O'zbekiston bo'ylab eng yaxshi ish topish platformasi</footer>
 
@@ -348,9 +369,57 @@
     document.getElementById("heroRegForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const email = document.getElementById("heroEmail").value.trim();
-      if (email) {
-        window.location.href = `seeker.html`;
+      if (email) window.location.href = "seeker.html";
+    });
+
+    // Resume modal form submission
+    document.getElementById("resumeModalForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const name       = (fd.get("name")       || "").trim();
+      const profession = (fd.get("profession") || "").trim();
+      const experience = (fd.get("experience") || "").trim();
+      const contact    = (fd.get("contact")    || "").trim();
+      const msg = document.getElementById("resumeModalMsg");
+      if (!name || !profession || !contact) {
+        msg.textContent = "❌ Ism, kasb va aloqa majburiy!";
+        msg.style.cssText = "display:block;background:#fef2f2;color:#dc2626;";
+        return;
       }
+      try {
+        const res = await fetch(API + "/resumes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, profession, experience, contact })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          msg.textContent = "❌ " + (data.message || "Xatolik");
+          msg.style.cssText = "display:block;background:#fef2f2;color:#dc2626;";
+          return;
+        }
+        msg.textContent = "✅ Rezyumengiz muvaffaqiyatli saqlandi!";
+        msg.style.cssText = "display:block;background:#f0fdf4;color:#16a34a;";
+        e.target.reset();
+        // Reload resumes list
+        const r2 = await fetch(API + "/resumes");
+        const newList = await r2.json();
+        renderResumes(newList);
+        animateCount("statResumes", newList.length);
+        setTimeout(() => {
+          document.getElementById("resumeModal").style.display = "none";
+          msg.style.display = "none";
+        }, 2000);
+      } catch(err) {
+        msg.textContent = "❌ Serverga ulanishda xatolik.";
+        msg.style.cssText = "display:block;background:#fef2f2;color:#dc2626;";
+      }
+    });
+
+    // Close modal on overlay click
+    document.getElementById("resumeModal").addEventListener("click", (e) => {
+      if (e.target === document.getElementById("resumeModal"))
+        document.getElementById("resumeModal").style.display = "none";
     });
 
     loadPage();
