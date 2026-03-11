@@ -1,77 +1,248 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ish izlovchi - IshTop.uz</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ish qidirish - IshTop.uz</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Floating resume button */
+    .fab-resume {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #16a34a;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.4);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .fab-resume:hover { background: #15803d; transform: scale(1.05); }
+
+    /* Resume modal overlay */
+    .resume-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,23,42,0.7);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .resume-modal-overlay.open { display: flex; }
+    .resume-modal {
+      background: white;
+      border-radius: 16px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      animation: popIn 0.25s ease;
+    }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+    .resume-modal h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; color: #1e293b; }
+    .resume-modal p  { font-size: 14px; color: #64748b; margin-bottom: 20px; }
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none; font-size: 22px;
+      cursor: pointer; color: #94a3b8;
+    }
+    .modal-close:hover { color: #1e293b; }
+    .modal-form label { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; font-size: 14px; font-weight: 500; color: #374151; }
+    .modal-form input {
+      padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;
+      font-size: 15px; outline: none; transition: 0.2s;
+    }
+    .modal-form input:focus { border-color: #16a34a; }
+    .modal-submit {
+      width: 100%; padding: 13px; background: #16a34a; color: white;
+      border: none; border-radius: 8px; font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: 0.2s; margin-top: 4px;
+    }
+    .modal-submit:hover { background: #15803d; }
+    .modal-msg { text-align: center; font-size: 14px; margin-top: 10px; display: none; padding: 10px; border-radius: 8px; }
+    .modal-msg.ok { background: #f0fdf4; color: #16a34a; display: block; }
+    .modal-msg.err { background: #fef2f2; color: #dc2626; display: block; }
+  </style>
 </head>
-
 <body>
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="toast-container"></div>
+  <!-- Toast -->
+  <div id="toastContainer" class="toast-container"></div>
 
-    <header>
-        <div class="container">
-            <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Ish<span>Top</span>
-                    <small style="color:white;font-size:12px;">(Izlovchi)</small></a></div>
-            <nav>
-                <a href="#jobs">Barcha Vakansiyalar</a>
-                <a href="#resumes">Mening Rezyumemni Qoldirish</a>
-                <a href="index.html"
-                    style="background:#ef4444;padding:8px 15px;border-radius:6px;margin-left:15px;">Chiqish</a>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <a href="index.html" style="color:inherit;text-decoration:none;">Ish<span>Top</span> <small style="color:white;font-size:12px;">(Ishchi)</small></a>
+      </div>
+      <nav>
+        <a href="#jobs">Vakansiyalar</a>
+        <a href="index.html" style="background:#ef4444;padding:8px 15px;border-radius:6px;margin-left:15px;">Chiqish</a>
+      </nav>
+    </div>
+  </header>
 
-    <section class="hero" style="height: 250px;">
-        <div class="hero-content">
-            <h1>O'zbekistondan ish toping</h1>
-            <p>O'z sohangizdagi eng yaxshi vakansiyalarni izlang</p>
-            <div class="search-box">
-                <input type="text" id="jobsSearchInput" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
-                <button>Qidirish</button>
-            </div>
-        </div>
-    </section>
+  <section class="hero" style="height:250px;">
+    <div class="hero-content">
+      <h1>O'zingizga mos ishni toping</h1>
+      <p>Minglab vakansiyalardan o'zingizga mosini izlang</p>
+      <div class="search-box">
+        <input type="text" id="seekerSearch" placeholder="Kasb yoki kompaniya bo'yicha qidirish">
+        <button onclick="seekerFilter()">Qidirish</button>
+      </div>
+    </div>
+  </section>
 
+  <div style="max-width:1100px;margin:0 auto;padding:20px;">
     <div id="jobsContainer" class="jobs-grid"></div>
     <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
-    <div id="jobsError" class="info-text error" style="display: none;">Vakansiyalarni yuklashda xatolik. Backend
-        ishlayotganini tekshiring.</div>
-    <div id="jobsEmpty" class="empty-state" style="display: none;">
-        <h3>Hozircha vakansiya yo'q</h3>
-        <p>Qidiruv bo'yicha hech narsa topilmadi yoki hali qo'shilmagan.</p>
+    <div id="jobsEmpty" class="empty-state" style="display:none;">
+      <h3>Hozircha vakansiya yo'q</h3>
+      <p>Qidiruv bo'yicha hech narsa topilmadi.</p>
     </div>
+  </div>
 
-    <section class="add-job-section" id="resumes" style="margin-top: 40px;">
-        <h2 style="text-align: center;">Rezyume qoldirish</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 20px;">Kompaniyalar sizni topishi uchun
-            ma'lumotlaringizni to'ldiring</p>
-        <form id="addResumeForm" class="add-job-form">
-            <label>
-                <span>Ismingiz *</span>
-                <input type="text" name="name" required placeholder="To'liq ismingiz">
-            </label>
-            <label>
-                <span>Kasbingiz/Sohangiz *</span>
-                <input type="text" name="profession" required placeholder="Masalan: Frontend Developer">
-            </label>
-            <label>
-                <span>Tajribangiz</span>
-                <input type="text" name="experience" placeholder="Masalan: 2 yil">
-            </label>
-            <label>
-                <span>Aloqa *</span>
-                <input type="text" name="contact" required placeholder="Telefon raqam yoki Telegram">
-            </label>
-            <button type="submit">Rezyumeni jo'natish</button>
-        </form>
-    </section>
+  <footer>© 2026 IshTop.uz — Barcha huquqlar himoyalangan</footer>
 
-    <footer>© 2026 IshTop.uz — Barcha huquqlar himoyalangan</footer>
-    <script src="script.js"></script>
+  <!-- Floating Resume Button -->
+  <button class="fab-resume" onclick="document.getElementById('resumeModal').classList.add('open')">
+    📄 Rezyume qoldirish
+  </button>
+
+  <!-- Resume Modal -->
+  <div class="resume-modal-overlay" id="resumeModal">
+    <div class="resume-modal">
+      <button class="modal-close" onclick="document.getElementById('resumeModal').classList.remove('open')">×</button>
+      <h2>📄 Rezyume Qoldirish</h2>
+      <p>Ish beruvchilar siz bilan bog'lanishi uchun ma'lumotlaringizni kiriting</p>
+      <form class="modal-form" id="resumeForm">
+        <label>
+          Ismingiz *
+          <input type="text" name="name" required placeholder="To'liq ismingiz">
+        </label>
+        <label>
+          Kasbingiz *
+          <input type="text" name="profession" required placeholder="Masalan: Frontend Developer">
+        </label>
+        <label>
+          Tajriba
+          <input type="text" name="experience" placeholder="Masalan: 2 yil">
+        </label>
+        <label>
+          Aloqa (telefon / Telegram) *
+          <input type="text" name="contact" required placeholder="+998 90 123 45 67">
+        </label>
+        <button type="submit" class="modal-submit">Rezyumeni jo'natish</button>
+        <div class="modal-msg" id="resumeMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API = window.location.origin;
+    let allJobs = [];
+
+    // Load jobs
+    async function loadJobs() {
+      try {
+        const res = await fetch(API + '/jobs');
+        allJobs = await res.json();
+        renderJobs(allJobs);
+      } catch(e) {
+        document.getElementById('jobsLoading').textContent = 'Serverga ulanishda xatolik. Backend ishlayotganini tekshiring.';
+      }
+    }
+
+    function esc(t) { const d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; }
+
+    function renderJobs(jobs) {
+      const c = document.getElementById('jobsContainer');
+      const l = document.getElementById('jobsLoading');
+      const e = document.getElementById('jobsEmpty');
+      l.style.display = 'none';
+      c.innerHTML = '';
+      if (!jobs.length) { e.style.display = 'block'; return; }
+      e.style.display = 'none';
+      jobs.forEach((job, i) => {
+        const card = document.createElement('div');
+        card.className = 'job-card';
+        card.style.animationDelay = i * 0.04 + 's';
+        card.innerHTML = `
+          <h3 class="job-card-title">${esc(job.title)}</h3>
+          <p class="job-card-company">🏢 ${esc(job.company)}</p>
+          <p class="job-card-location">📍 ${esc(job.location)}</p>
+          <p class="job-card-type">⏱ ${esc(job.type||'Full-time')}</p>
+          ${job.salary ? `<p class="job-card-salary">💰 ${esc(job.salary)}</p>` : ''}
+        `;
+        c.appendChild(card);
+      });
+    }
+
+    function seekerFilter() {
+      const q = document.getElementById('seekerSearch').value.trim().toLowerCase();
+      renderJobs(!q ? allJobs : allJobs.filter(j =>
+        (j.title||'').toLowerCase().includes(q) || (j.company||'').toLowerCase().includes(q)
+      ));
+    }
+
+    document.getElementById('seekerSearch').addEventListener('input', seekerFilter);
+
+    // Resume form submission
+    document.getElementById('resumeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const name       = (fd.get('name')       || '').trim();
+      const profession = (fd.get('profession') || '').trim();
+      const experience = (fd.get('experience') || '').trim();
+      const contact    = (fd.get('contact')    || '').trim();
+      const msg        = document.getElementById('resumeMsg');
+
+      if (!name || !profession || !contact) {
+        msg.textContent = '❌ Ism, kasb va aloqa maydonlari majburiy!';
+        msg.className = 'modal-msg err';
+        return;
+      }
+
+      try {
+        const res = await fetch(API + '/resumes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, profession, experience, contact })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          msg.textContent = '❌ ' + (data.message || 'Xatolik yuz berdi');
+          msg.className = 'modal-msg err';
+          return;
+        }
+        msg.textContent = '✅ Rezyumengiz muvaffaqiyatli saqlandi!';
+        msg.className = 'modal-msg ok';
+        e.target.reset();
+        setTimeout(() => {
+          document.getElementById('resumeModal').classList.remove('open');
+          msg.className = 'modal-msg';
+        }, 2000);
+      } catch(err) {
+        msg.textContent = '❌ Serverga ulanishda xatolik.';
+        msg.className = 'modal-msg err';
+      }
+    });
+
+    // Close modal on overlay click
+    document.getElementById('resumeModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('resumeModal'))
+        document.getElementById('resumeModal').classList.remove('open');
+    });
+
+    loadJobs();
+  </script>
 </body>
-
 </html>
