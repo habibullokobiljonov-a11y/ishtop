@@ -133,6 +133,20 @@
       padding: 20px; font-size: 13px;
     }
 
+    .resume-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px 22px 18px;
+      border: 1.5px solid #e2e8f0;
+      border-left: 4px solid #16a34a;
+      transition: 0.25s;
+      animation: fadeUp 0.4s ease both;
+    }
+    .resume-card:hover { box-shadow: 0 4px 18px rgba(22,163,74,0.12); transform: translateY(-2px); }
+    .resume-card-name   { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+    .resume-card-job    { font-size: 14px; color: #16a34a; font-weight: 600; margin-bottom: 4px; }
+    .resume-card-meta   { font-size: 13px; color: #64748b; margin-top: 6px; }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       .site-header { padding: 16px 20px; }
@@ -212,6 +226,17 @@
     </div>
   </section>
 
+  <!-- RESUMES LIST -->
+  <section class="jobs-section" style="background:#f0fdf4;">
+    <h2>👥 Ish Izlovchilar (Rezyumelar)</h2>
+    <div id="resumesContainer" class="jobs-grid"></div>
+    <div id="resumesLoading" class="info-text">Yuklanmoqda...</div>
+    <div id="resumesEmpty" class="empty-state" style="display:none;">
+      <h3>Hozircha rezyume yo'q</h3>
+      <p>Birinchi bo'lib o'z rezyumengizni qoldiring.</p>
+    </div>
+  </section>
+
   <footer>© 2026 IshTop.uz — O'zbekiston bo'ylab eng yaxshi ish topish platformasi</footer>
 
   <script>
@@ -238,6 +263,7 @@
         animateCount("statCompanies", companies.size || 0);
 
         renderJobs(allJobs);
+        renderResumes(resumes || []);
       } catch (e) {
         console.error(e);
         document.getElementById("jobsLoading").textContent = "Server bilan aloqa o'rnatilmadi. Backend ishlayotganini tekshiring.";
@@ -293,6 +319,28 @@
         (j.company || "").toLowerCase().includes(q)
       );
       renderJobs(filtered);
+    }
+
+    function renderResumes(list) {
+      const c = document.getElementById("resumesContainer");
+      const l = document.getElementById("resumesLoading");
+      const e = document.getElementById("resumesEmpty");
+      l.style.display = "none";
+      c.innerHTML = "";
+      if (!list.length) { e.style.display = "block"; return; }
+      e.style.display = "none";
+      list.forEach((r, i) => {
+        const card = document.createElement("div");
+        card.className = "resume-card";
+        card.style.animationDelay = i * 0.05 + "s";
+        card.innerHTML = `
+          <p class="resume-card-name">👤 ${esc(r.name)}</p>
+          <p class="resume-card-job">💼 ${esc(r.profession)}</p>
+          <p class="resume-card-meta">⏱ Tajriba: ${esc(r.experience || "Ko'rsatilmagan")}</p>
+          <p class="resume-card-meta">📞 ${esc(r.contact)}</p>
+        `;
+        c.appendChild(card);
+      });
     }
 
     document.getElementById("searchInput").addEventListener("input", doSearch);
