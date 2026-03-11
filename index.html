@@ -4,124 +4,308 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IshTop.uz - Portalga kirish</title>
-  <link rel="stylesheet" href="style.css">
+  <title>IshTop.uz — Ishga kirish va ish topish platformasi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.85)), url('job-bg.jpg') no-repeat center center/cover;
-      background-attachment: fixed;
-      min-height: 100vh;
-      color: white;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f7fa; color: #1e293b; }
 
-    .roles-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 50px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
+    /* ===== HEADER ===== */
+    .site-header {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 50px;
     }
-
-    .role-card {
-      background: white;
-      border-radius: 12px;
-      padding: 40px 30px;
-      text-align: center;
-      width: 300px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: 0.3s;
-      text-decoration: none;
-      color: inherit;
+    .site-logo { font-size: 26px; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
+    .site-logo span { color: #3b82f6; }
+    .header-nav { display: flex; align-items: center; gap: 12px; }
+    .header-nav a {
+      color: #fff; text-decoration: none; font-size: 14px; font-weight: 500;
+      padding: 8px 18px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.5);
+      transition: 0.2s;
     }
-
-    .role-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      border-bottom: 4px solid #2563eb;
-    }
-
-    .role-card h2 {
-      color: #1e293b;
-      margin-bottom: 15px;
-      font-size: 24px;
-    }
-
-    .role-card p {
-      color: #64748b;
-      margin-bottom: 25px;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
+    .header-nav a:hover { background: rgba(255,255,255,0.15); border-color: white; }
+    .header-nav .btn-solid {
+      background: #fff; color: #1e293b; border-color: transparent;
       font-weight: 600;
-      transition: 0.3s;
+    }
+    .header-nav .btn-solid:hover { background: #e2e8f0; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 480px; position: relative; overflow: hidden;
+      background: url('job-bg.jpg') center center/cover no-repeat;
+      display: flex; align-items: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(10,20,45,0.90) 38%, rgba(10,20,45,0.30) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 120px 50px 80px; max-width: 570px;
+    }
+    .hero-content h1 {
+      font-size: 32px; font-weight: 800; color: #fff; line-height: 1.3;
+      margin-bottom: 28px; text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .hero-content h1 em { font-style: normal; color: #60a5fa; }
+
+    /* Registration form */
+    .hero-form { display: flex; gap: 0; max-width: 480px; margin-bottom: 16px; }
+    .hero-form input {
+      flex: 1; padding: 14px 18px; font-size: 15px; border: none;
+      border-radius: 8px 0 0 8px; outline: none; color: #1e293b;
+      background: #fff;
+    }
+    .hero-form input::placeholder { color: #94a3b8; }
+    .hero-form button {
+      padding: 14px 24px; background: #2563eb; color: #fff; border: none;
+      border-radius: 0 8px 8px 0; font-size: 15px; font-weight: 600;
+      cursor: pointer; white-space: nowrap; transition: 0.2s;
+    }
+    .hero-form button:hover { background: #1d4ed8; }
+    .hero-note { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+
+    /* Stats */
+    .hero-stats { display: flex; gap: 32px; }
+    .stat { text-align: left; }
+    .stat-num {
+      font-size: 28px; font-weight: 800; color: #fff; display: block;
+      line-height: 1; letter-spacing: -1px;
+    }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+
+    /* ===== SEARCH ===== */
+    .search-section { background: #fff; padding: 32px 50px; border-bottom: 1px solid #e2e8f0; }
+    .search-section h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; color: #1e293b; }
+    .search-row { display: flex; gap: 12px; max-width: 700px; }
+    .search-row input {
+      flex: 1; padding: 12px 16px; font-size: 15px; border: 1.5px solid #cbd5e1;
+      border-radius: 8px; outline: none; transition: 0.2s; background: #f8fafc;
+    }
+    .search-row input:focus { border-color: #2563eb; background: #fff; }
+    .search-row button {
+      padding: 12px 28px; background: #2563eb; color: #fff; border: none;
+      border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: 0.2s;
+    }
+    .search-row button:hover { background: #1d4ed8; }
+    .search-section .role-links { margin-top: 12px; display: flex; gap: 16px; }
+    .search-section .role-links a {
+      font-size: 13px; color: #2563eb; text-decoration: none; font-weight: 500;
+    }
+    .search-section .role-links a:hover { text-decoration: underline; }
+
+    /* ===== JOBS SECTION ===== */
+    .jobs-section { max-width: 1100px; margin: 0 auto; padding: 40px 20px 60px; }
+    .jobs-section h2 { font-size: 22px; font-weight: 700; margin-bottom: 24px; color: #1e293b; }
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .job-card {
+      background: #fff; border-radius: 12px; padding: 22px 22px 18px;
+      border: 1.5px solid #e2e8f0; transition: 0.25s; cursor: default;
+      animation: fadeUp 0.4s ease both;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .job-card:hover { border-color: #93c5fd; box-shadow: 0 4px 18px rgba(37,99,235,0.1); transform: translateY(-2px); }
+    .job-card-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+    .job-card-company { font-size: 13px; color: #2563eb; font-weight: 600; margin-bottom: 4px; }
+    .job-card-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+    .job-chip {
+      font-size: 12px; padding: 3px 10px; border-radius: 20px;
+      background: #eff6ff; color: #1d4ed8; font-weight: 500;
+    }
+    .job-chip.green { background: #f0fdf4; color: #16a34a; }
+    .job-chip.gray { background: #f1f5f9; color: #475569; }
+    .empty-state { text-align: center; padding: 60px 20px; color: #94a3b8; }
+    .empty-state h3 { font-size: 18px; margin-bottom: 8px; color: #64748b; }
+    .info-text { text-align: center; padding: 30px; color: #94a3b8; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0f172a; color: #64748b; text-align: center;
+      padding: 20px; font-size: 13px;
     }
 
-    .role-card:hover .btn {
-      background: #1d4ed8;
-    }
-
-    .admin-card:hover {
-      border-bottom: 4px solid #ef4444;
-    }
-
-    .admin-card .btn {
-      background: #ef4444;
-    }
-
-    .admin-card:hover .btn {
-      background: #dc2626;
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 700px) {
+      .site-header { padding: 16px 20px; }
+      .hero-content { padding: 100px 20px 60px; }
+      .hero-content h1 { font-size: 24px; }
+      .hero-form { flex-direction: column; }
+      .hero-form input,
+      .hero-form button { border-radius: 8px; }
+      .search-section { padding: 24px 16px; }
+      .search-row { flex-direction: column; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
     }
   </style>
 </head>
 
 <body>
-  <header style="padding: 15px 0;">
-    <div class="container" style="justify-content: center;">
-      <div class="logo">Ish<span>Top</span> Portal</div>
-    </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Ish<span>Top</span></a>
+    <nav class="header-nav">
+      <a href="seeker.html">Ish topish</a>
+      <a href="employer.html">Vakansiya joylash</a>
+      <a href="seeker.html" class="btn-solid">Ro'yxatdan o'tish</a>
+    </nav>
   </header>
 
-  <div style="text-align: center; margin-top: 60px; padding: 0 20px;">
-    <h1 style="font-size: 38px; color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">O'zingizga mos rolni tanlang
-    </h1>
-    <p style="color: #cbd5e1; margin-top: 10px; font-size: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Platformadan
-      qanday maqsadda foydalanmoqchisiz?</p>
-  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Elektron pochtangizni kiriting va <em>ish beruvchilar sizni topsin</em></h1>
 
-  <div class="roles-container">
-    <!-- Ish izlovchi -->
-    <a href="seeker.html" class="role-card">
-      <h2>Ish qidiryapman</h2>
-      <p>O'zbekiston bo'ylab yuzlab ochiq ish o'rinlarini ko'ring va rezyumengizni ish beruvchilarga yuboring.</p>
-      <span class="btn">Kirish (Ishchi)</span>
-    </a>
+      <form class="hero-form" id="heroRegForm">
+        <input type="email" id="heroEmail" placeholder="Elektron pochta manzilingiz" required>
+        <button type="submit">Davom etish</button>
+      </form>
+      <div class="hero-note">«Davom etish»ni bosib, siz foydalanish shartlarini qabul qilasiz.</div>
 
-    <!-- Ish beruvchi -->
-    <a href="employer.html" class="role-card">
-      <h2>Men Ish beruvchiman</h2>
-      <p>Kompaniyangiz uchun yangi vakansiya e'lon qiling va minglab iste'dodli kadrlarning rezyumelarini ko'rib
-        chiqing.</p>
-      <span class="btn">Kirish (Kompaniya)</span>
-    </a>
-
-  </div>
-
-  <footer
-    style="background: transparent; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; margin-top: auto;">
-    <div style="margin-bottom: 10px; text-align: right; padding-right: 20px;">
-      <a href="admin.html" style="color: #94a3b8; font-size: 14px; text-decoration: underline;">Admin Panel</a>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="statResumes">...</span>
+          <div class="stat-label">rezyume</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="statJobs">...</span>
+          <div class="stat-label">vakansiya</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="statCompanies">...</span>
+          <div class="stat-label">kompaniya</div>
+        </div>
+      </div>
     </div>
-    © 2026 IshTop.uz — Barcha huquqlar himoyalangan
-  </footer>
-</body>
+  </section>
 
+  <!-- SEARCH -->
+  <section class="search-section">
+    <h2>Ishlash Uchun Ishni Toping — O'zbekistonda</h2>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Kasb, lavozim yoki kompaniya">
+      <button onclick="doSearch()">Topish</button>
+    </div>
+    <div class="role-links">
+      <a href="employer.html">Men ish beruvchiman →</a>
+    </div>
+  </section>
+
+  <!-- JOBS LIST -->
+  <section class="jobs-section">
+    <h2>🔥 So'nggi Vakansiyalar</h2>
+    <div id="jobsContainer" class="jobs-grid"></div>
+    <div id="jobsLoading" class="info-text">Yuklanmoqda...</div>
+    <div id="jobsEmpty" class="empty-state" style="display:none;">
+      <h3>Hozircha vakansiya yo'q</h3>
+      <p>Qidiruv bo'yicha natija topilmadi.</p>
+    </div>
+  </section>
+
+  <footer>© 2026 IshTop.uz — O'zbekiston bo'ylab eng yaxshi ish topish platformasi</footer>
+
+  <script>
+    const API = window.location.origin;
+    let allJobs = [];
+
+    // Load stats + jobs
+    async function loadPage() {
+      try {
+        const [jobsRes, resumesRes] = await Promise.all([
+          fetch(`${API}/jobs`),
+          fetch(`${API}/resumes`)
+        ]);
+        const jobs = await jobsRes.json();
+        const resumes = await resumesRes.json();
+
+        allJobs = jobs || [];
+
+        // Count unique companies
+        const companies = new Set((jobs || []).map(j => j.company));
+
+        animateCount("statResumes", resumes.length || 0);
+        animateCount("statJobs", jobs.length || 0);
+        animateCount("statCompanies", companies.size || 0);
+
+        renderJobs(allJobs);
+      } catch (e) {
+        console.error(e);
+        document.getElementById("jobsLoading").textContent = "Server bilan aloqa o'rnatilmadi. Backend ishlayotganini tekshiring.";
+      }
+    }
+
+    function animateCount(id, target) {
+      const el = document.getElementById(id);
+      let cur = 0;
+      const step = Math.max(1, Math.ceil(target / 40));
+      const interval = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        el.textContent = cur.toLocaleString();
+        if (cur >= target) clearInterval(interval);
+      }, 30);
+    }
+
+    function esc(t) {
+      const d = document.createElement("div");
+      d.textContent = t || "";
+      return d.innerHTML;
+    }
+
+    function renderJobs(jobs) {
+      const container = document.getElementById("jobsContainer");
+      const loading = document.getElementById("jobsLoading");
+      const empty = document.getElementById("jobsEmpty");
+      loading.style.display = "none";
+      container.innerHTML = "";
+      if (!jobs.length) { empty.style.display = "block"; return; }
+      empty.style.display = "none";
+      jobs.forEach((job, i) => {
+        const card = document.createElement("div");
+        card.className = "job-card";
+        card.style.animationDelay = `${i * 0.05}s`;
+        card.innerHTML = `
+          <p class="job-card-company">${esc(job.company)}</p>
+          <h3 class="job-card-title">${esc(job.title)}</h3>
+          <div class="job-card-meta">
+            <span class="job-chip gray">📍 ${esc(job.location)}</span>
+            <span class="job-chip">${esc(job.type || "Full-time")}</span>
+            ${job.salary ? `<span class="job-chip green">💰 ${esc(job.salary)}</span>` : ""}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function doSearch() {
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const filtered = !q ? allJobs : allJobs.filter(j =>
+        (j.title || "").toLowerCase().includes(q) ||
+        (j.company || "").toLowerCase().includes(q)
+      );
+      renderJobs(filtered);
+    }
+
+    document.getElementById("searchInput").addEventListener("input", doSearch);
+
+    document.getElementById("heroRegForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("heroEmail").value.trim();
+      if (email) {
+        window.location.href = `seeker.html`;
+      }
+    });
+
+    loadPage();
+  </script>
+</body>
 </html>
