@@ -48,12 +48,8 @@
                 <span>Ish turi</span>
                 <input type="text" name="type" placeholder="Full-time">
             </label>
-            <!-- We keep the "admin" password field just to satisfy the backend for now, or we can auto-fill it via JS later -->
-            <label>
-                <span>Platforma Paroli * (admin)</span>
-                <input type="password" name="password" required placeholder="Faqat kompaniyalar/adminlar uchun parol"
-                    value="admin">
-            </label>
+            <!-- Hidden password auto-filled for employer -->
+            <input type="hidden" name="password" value="admin">
             <button type="submit">Vakansiyani e'lon qilish</button>
         </form>
     </section>

@@ -20,6 +20,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
+const ADMIN_PASSWORD = "admin";
+
 let jobs = [
   { id: 1, title: "Frontend Developer", company: "IT Solutions", location: "Toshkent", type: "Full-time" },
   { id: 2, title: "Backend Developer", company: "Tech Group", location: "Samarqand", type: "Remote" },
@@ -71,8 +73,6 @@ app.delete("/resumes/:id", (req, res) => {
   resumes = resumes.filter(r => r.id !== resumeId);
   res.json({ success: true });
 });
-
-const ADMIN_PASSWORD = "admin";
 
 app.post("/jobs", (req, res) => {
   const { title, company, location, type, salary, password } = req.body;
