@@ -48,9 +48,12 @@
                 <span>Ish turi</span>
                 <input type="text" name="type" placeholder="Full-time">
             </label>
-            <!-- Hidden password auto-filled for employer -->
-            <input type="hidden" name="password" value="admin">
+            <label>
+                <span>Admin Parol *</span>
+                <input type="password" name="password" required placeholder="Admin parolini kiriting">
+            </label>
             <button type="submit">Vakansiyani e'lon qilish</button>
+            <div id="formMessage" class="form-message"></div>
         </form>
     </section>
 
@@ -67,6 +70,10 @@
     </section>
 
     <footer>© 2026 IshTop.uz — Barcha huquqlar himoyalangan</footer>
+    <script>
+        // Set admin mode
+        window.IS_ADMIN = true;
+    </script>
     <script src="script.js"></script>
 </body>
 

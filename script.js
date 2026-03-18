@@ -12,7 +12,7 @@ const addJobForm = document.getElementById("addJobForm");
 const formMessage = document.getElementById("formMessage");
 const jobsSearchInput = document.getElementById("jobsSearchInput");
 
-const API_BASE = window.location.origin;
+const API_BASE = "http://localhost:5000";
 
 const jobsContainer = document.getElementById("jobsContainer");
 const jobsLoading = document.getElementById("jobsLoading");
