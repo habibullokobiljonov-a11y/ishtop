@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - IshTop.uz</title>
     <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+    <style>
+        .admin-login-modal {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .admin-login-modal input {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+    </style>
 </head>
 
 <body>
@@ -15,16 +28,15 @@
     <!-- Admin Login Overlay -->
     <div id="adminLoginOverlay"
         style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;">
-        <div style="background:white;padding:30px;border-radius:12px;text-align:center;width:350px;">
-            <h2 style="margin-bottom:15px;color:#1e293b;">Admin Autentifikatsiyasi</h2>
-            <p style="margin-bottom:20px;color:#64748b;font-size:14px;">Boshqaruv paneliga kirish uchun parolni kiriting
+        <div class="admin-login-modal" style="padding:30px;border-radius:12px;text-align:center;width:350px;">
+            <h2 style="margin-bottom:15px;">Admin Autentifikatsiyasi</h2>
+            <p style="margin-bottom:20px;font-size:14px;">Boshqaruv paneliga kirish uchun parolni kiriting
                 (parol: admin123)</p>
             <input type="password" id="adminPasswordInput" placeholder="Parol"
-                style="width:100%;padding:10px;margin-bottom:15px;border:1px solid #ddd;border-radius:6px;">
-            <button id="adminLoginBtn" class="btn" style="width:100%;border:none;cursor:pointer;">Kirish</button>
+                style="width:100%;padding:10px;margin-bottom:15px;border-radius:6px;">
+            <button id="adminLoginBtn" class="btn" style="width:100%;border:none;cursor:pointer;background:#ef4444;color:white;padding:10px;border-radius:6px;">Kirish</button>
             <a href="index.html"
-                style="display:block;margin-top:15px;color:#ef4444;text-decoration:none;font-size:14px;">Orqaga
-                qaytish</a>
+                style="display:block;margin-top:15px;color:#ef4444;text-decoration:none;font-size:14px;">Orqaga qaytish</a>
         </div>
     </div>
 
@@ -33,8 +45,8 @@
             <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Ish<span>Top</span>
                     <small style="color:white;font-size:12px;">(Boshqaruv Paneli)</small></a></div>
             <nav>
-                <a href="#jobs">Barcha Vakansiyalar</a>
-                <a href="#resumes">Barcha Rezyumelar</a>
+                <a href="#jobs">Vakansiyalar</a>
+                <a href="#resumes">Rezyumelar</a>
                 <a href="index.html"
                     style="background:#ef4444;padding:8px 15px;border-radius:6px;margin-left:15px;">Chiqish</a>
             </nav>
@@ -45,7 +57,7 @@
     <script>window.IS_ADMIN = true;</script>
 
     <section id="jobs" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-        <h2 style="text-align: center; margin-bottom: 20px;">Barcha Vakansiyalarni Boshqarish</h2>
+        <h2 style="text-align: center; margin-bottom: 20px;">Vakansiyalarni Boshqarish</h2>
         <div id="jobsContainer" class="jobs-grid"></div>
         <div id="jobsLoading" class="info-text">Vakansiyalar yuklanmoqda...</div>
         <div id="jobsEmpty" class="empty-state" style="display: none;">
@@ -54,7 +66,7 @@
         </div>
     </section>
 
-    <hr style="margin: 50px 0; border: none; border-top: 1px solid #ddd;">
+    <hr style="margin: 50px 0; border: none; border-top: 1px solid var(--border-color);">
 
     <section id="resumes" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
         <h2 style="text-align: center; margin-bottom: 20px;">Rezyumelarni Boshqarish</h2>
